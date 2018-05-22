@@ -66,7 +66,7 @@ public final class UserResource {
 
 
     @GET
-    @Path("getByTeamId/{id}")
+    @Path("teams/{id}")
     public List<User> getAllUserByTeamId(@PathParam("id") Long teamId) {
         return service.getALLUserByteamId(teamId);
     }
