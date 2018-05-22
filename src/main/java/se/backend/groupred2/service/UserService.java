@@ -36,14 +36,24 @@ public final class UserService {
 
 
     public Optional<User> update(Long id, User user) {
-        validate(user);
+
         Optional<User> result = repository.findById(id);
 
         result.ifPresent(u -> {
-            u.setFirstName(user.getFirstName());
-            u.setLastName(user.getLastName());
-            u.setUserName(user.getUserName());
-            u.setActive(user.isActive());
+            if(user.getFirstName() == null && user.getLastName() == null && (user.getUserName() == null)) {
+                throw new InvalidUserException("body needed");
+
+            } else if(user.getFirstName() != null) {
+                u.setFirstName(user.getFirstName());
+
+            } else if(user.getLastName() != null) {
+                u.setLastName(user.getLastName());
+
+            } else {
+                validate(user);
+                u.setUserName(user.getUserName());
+
+            }
 
             repository.save(u);
         });
@@ -98,7 +108,6 @@ public final class UserService {
         }
         return null;
     }
-
 
     public List<User> getALLUserByteamId(Long id) {
 
