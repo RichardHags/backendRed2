@@ -6,6 +6,7 @@ import se.backend.groupred2.model.TaskStatus;
 import se.backend.groupred2.model.User;
 import se.backend.groupred2.repository.TaskRepository;
 import se.backend.groupred2.repository.UserRepository;
+import se.backend.groupred2.service.exceptions.InvalidTeamException;
 import se.backend.groupred2.service.exceptions.InvalidUserException;
 
 import java.util.List;
@@ -31,25 +32,14 @@ public final class UserService {
     }
 
     public Optional<User> update(Long id, User user) {
-
+        validate(user);
         Optional<User> result = repository.findById(id);
 
         result.ifPresent(u -> {
-            if (user.getFirstName() == null && user.getLastName() == null && (user.getUserName() == null)) {
-                throw new InvalidUserException("body needed");
-
-            } else if (user.getFirstName() != null) {
-                u.setFirstName(user.getFirstName());
-
-            } else if (user.getLastName() != null) {
-                u.setLastName(user.getLastName());
-
-            } else {
-                validate(user);
-                u.setUserName(user.getUserName());
-
-            }
-
+            u.setFirstName(user.getFirstName());
+            u.setLastName(user.getLastName());
+            u.setUserName(user.getUserName());
+            u.setActive(user.isActive());
             repository.save(u);
         });
 
@@ -60,6 +50,7 @@ public final class UserService {
         Optional<User> result = repository.findById(id);
 
         result.ifPresent(t -> {
+            checkIfActive(t);
             t.deActivate();
             List<Task> tasks = getAllTasksByUserId(result.get().getId());
             tasks.forEach(task -> task.setStatus(TaskStatus.UNSTARTED));
@@ -69,6 +60,11 @@ public final class UserService {
         });
 
         return result;
+    }
+
+    private void checkIfActive(User user) {
+        if (!user.isActive())
+            throw new InvalidTeamException("User is already inactive.");
     }
 
     public List<Task> getAllTasksByUserId(Long userkId) {
