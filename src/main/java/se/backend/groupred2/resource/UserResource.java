@@ -17,7 +17,6 @@ import static javax.ws.rs.core.Response.Status.*;
 @Path("users")
 public final class UserResource {
 
-
     private final UserService service;
 
     public UserResource(UserService service) {
@@ -64,6 +63,5 @@ public final class UserResource {
     public List<User> getAllUserByTeamId(@PathParam("id") Long teamId) {
         return service.getAllUserByteamId(teamId);
     }
-
 
 }

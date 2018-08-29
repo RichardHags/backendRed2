@@ -10,6 +10,15 @@ import org.springframework.context.annotation.Configuration;
 public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {
+      /*  register(IssueResource.class);
+        register(TaskResource.class);
+        register(TeamResource.class);
+        register(UserResource.class);
+        register(InvalidInputMapper.class);
+        register(InvalidTaskMapper.class);
+        register(InvalidUserMapper.class);
+        register(InvalidTeamMapper.class);*/
+
         packages("se.backend.groupred2.resource");
     }
 

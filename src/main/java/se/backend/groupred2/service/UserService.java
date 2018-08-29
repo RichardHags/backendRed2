@@ -88,7 +88,6 @@ public final class UserService {
                 return user;
             }
 
-
         } else if (!(userNumber == 0)) {
             return repository.findByUserNumber(userNumber);
 
@@ -120,5 +119,3 @@ public final class UserService {
     }
 
 }
-
-

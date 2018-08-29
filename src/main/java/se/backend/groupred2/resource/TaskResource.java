@@ -60,7 +60,7 @@ public final class TaskResource {
     }
 
     @GET
-    @Path("description") //queryparams för description
+    @Path("description")
     public List<Task> getAllTasksByDescription(@QueryParam("desc") String description) {
         return taskService.getAllTasksByDescription(description);
     }
@@ -93,9 +93,3 @@ public final class TaskResource {
     }
 
 }
-
-
-
-
-
-

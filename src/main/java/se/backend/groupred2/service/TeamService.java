@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Service
 public final class TeamService {
+
     private final TeamRepository teamRepository;
     private final UserRepository userRepository;
 
@@ -63,9 +64,9 @@ public final class TeamService {
         Optional<Team> result = teamRepository.findById(teamId);
         Team team;
 
-        if (result.isPresent())
+        if (result.isPresent()) {
             team = result.get();
-        else
+        } else
             throw new InvalidTeamException("Team does not exist.");
 
         return team;
@@ -78,7 +79,6 @@ public final class TeamService {
         if (teamResult.isPresent() && userResult.isPresent()) {
             User user = userResult.get();
             Team team = teamResult.get();
-
 
             validate(team);
             user.setTeam(team);
